@@ -20,8 +20,8 @@ list_file_paths <- function(dir_path, cur_name_pattern, desired_name_pattern = "
 
 
 # Declaring Global Variables ---------------------------------------------------
-DC_start_date.Public = as.Date("14.04.2024", format("%d.%m.%Y"))
-DC_start_date.CBE = as.Date("06.04.2024", format("%d.%m.%Y"))
+data_collection_start_date_ps = as.Date("14.04.2024", format("%d.%m.%Y"))
+# DC_start_date.CBE = as.Date("06.04.2024", format("%d.%m.%Y"))
 qa_sheet_url_ps = "https://docs.google.com/spreadsheets/d/1h90Z42H3V8SVKdfoywKc-x8o8m2Xr1JbhrEWykQOHVw/edit"
 
 output_data_path = "output/"
@@ -142,7 +142,7 @@ deleted_keys_ps = deletion_log |> filter(Sample_Type == "Public School") |> pull
 
 # convert numeric dates to date and time formats -------------------------------
 source("R/convert_numbers_to_date_time.R")
-
+ 
 # Apply correction log ------------------------------------------------ 
 if(nrow(correction_log) > 0) source("R/apply_correction_log.R")
 
@@ -174,6 +174,9 @@ source("R/fix_select_multiple_questions.R")
 # Check select multiple variables --------------------------------------
 source("R/check_select_multiple_questions.R")
 
+# re-calculate the calculated variables and compare any changes not applied - NOT
+# source("R/calculate_cols_check.R") 
+
 
 # Check the responses with the tool --------------------------------------------
 source("R/compare_df_values_with_tool.R")
@@ -181,6 +184,10 @@ source("R/compare_df_values_with_tool.R")
 
 # attach value labels  ---------------------------------------------------------
 source("R/attach_labels.R")
+
+
+# Logical inconsistencies ------------------------------------------------- NOT
+source("R/logical_checks.R")
 
 
 # change 7777, 8888, 9999 to Labels  -------------------------------------- 
