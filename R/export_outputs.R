@@ -147,6 +147,8 @@ if (nrow(missing_translations) > 0) write.xlsx(missing_translations, paste0(outp
 # if (nrow(un_logged_values) > 0) write.xlsx(un_logged_values, paste0(output_data_path, "issues/harmonization/harmonization_", Sys.Date(),".xlsx"))
 
 
+if (nrow(relevancy_issues) > 0) write.xlsx(relevancy_issues, paste0(output_data_path, "issues/relevancy_checks/relevancy_issues_", Sys.Date(),".xlsx"))
+
 sm_question_issues_dfs = list(
   # "NA issues in select_multiple" = sm_na_issues,
   "parent_series_inconsistencies" = sm_check_result
@@ -156,9 +158,9 @@ if (nrow(sm_check_result) > 0){
   write.xlsx(sm_question_issues_dfs, paste0(output_data_path, "issues/sm_issues/sm_check_result_", Sys.Date(),".xlsx"))
 }
 
-
 if (nrow(wrong_choices_result) > 0){
   write.xlsx(wrong_choices_result, paste0(output_data_path, "issues/wrong_choices/wrong_choices_result_", Sys.Date(),".xlsx"))
 }
+
 
 
