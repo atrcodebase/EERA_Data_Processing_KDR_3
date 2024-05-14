@@ -174,8 +174,9 @@ source("R/fix_select_multiple_questions.R")
 # Check select multiple variables --------------------------------------
 source("R/check_select_multiple_questions.R")
 
+
 # re-calculate the calculated variables and compare any changes not applied - NOT
-# source("R/calculate_cols_check.R") 
+source("R/calculate_cols_check.R")
 
 
 # Check the responses with the tool --------------------------------------------
