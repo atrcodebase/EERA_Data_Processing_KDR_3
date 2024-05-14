@@ -463,5 +463,5 @@ rm(
    tool4_path,
    tool5_path,
    tool6_path,
-   tool7_path
+   tool7_path,
    handle_labeler)
