@@ -162,5 +162,11 @@ if (nrow(wrong_choices_result) > 0){
   write.xlsx(wrong_choices_result, paste0(output_data_path, "issues/wrong_choices/wrong_choices_result_", Sys.Date(),".xlsx"))
 }
 
+if (nrow(calculate_issues) > 0){
+  write.xlsx(calculate_issues, paste0(output_data_path, "issues/calculate_issues/calculate_issues_", Sys.Date(),".xlsx"))
+}
 
+if (nrow(Logic_check_result) > 0){
+  write.xlsx(Logic_check_result, paste0(output_data_path, "issues/logic_checks/logic_checks_", Sys.Date(),".xlsx"))
+}
 
