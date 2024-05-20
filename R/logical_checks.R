@@ -2386,6 +2386,9 @@ lc_tool3 <- plyr::rbind.fill(
   
   # flagging if the selected date in D2 is equal to survey date but no is selected in D3
   clean_data.tool3$Todays_Attendance_Detail |>
+    left_join(
+      clean_data.tool3$data |> select(KEY, starttime) , by = c("PARENT_KEY" = "KEY")
+    ) |>
     filter(format.Date(D2, "%Y-%m-%d") == format.Date(starttime, "%Y-%m-%d") & D3 == "No") |>  # FIXME: make sure to convert the D2 var to date in convert_numbers_to_date_module
     mutate(
       Issue = "The date in D2 is equal to survey date, but in D3 'No' is selected!",
@@ -2408,6 +2411,9 @@ lc_tool3 <- plyr::rbind.fill(
   
   # flagging if the selected date in D2 is not equal to survey date but yes is selected in D3
   clean_data.tool3$Todays_Attendance_Detail |>
+    left_join(
+      clean_data.tool3$data |> select(KEY, starttime) , by = c("PARENT_KEY" = "KEY")
+    ) |>
     filter(D1 == "Yes" & format.Date(D2, "%Y-%m-%d") != format.Date(starttime, "%Y-%m-%d") & D3 == "Yes") |> 
     mutate(
       Issue = "The date in D2 is not equal to survey date, but in D3(confirmed D2 is equal to the day of interview) 'Yes' is selected!",
@@ -2430,6 +2436,9 @@ lc_tool3 <- plyr::rbind.fill(
   
   # flagging if the selected date in D2 is in future
   clean_data.tool3$Todays_Attendance_Detail|>
+    left_join(
+      clean_data.tool3$data |> select(KEY, starttime) , by = c("PARENT_KEY" = "KEY")
+    ) |>
     filter(format.Date(D2, "%Y-%m-%d") > format.Date(starttime, "%Y-%m-%d")) |>
     mutate(
       Issue = "The date in D2 is in the future!",
