@@ -21,6 +21,7 @@ list_file_paths <- function(dir_path, cur_name_pattern, desired_name_pattern = "
 
 # Declaring Global Variables ---------------------------------------------------
 data_collection_start_date_ps = as.Date("14.04.2024", format("%d.%m.%Y"))
+data_collection_end_date = as.Date("16.05.2024",  format("%d.%m.%Y"))
 # DC_start_date.CBE = as.Date("06.04.2024", format("%d.%m.%Y"))
 qa_sheet_url_ps = "https://docs.google.com/spreadsheets/d/1h90Z42H3V8SVKdfoywKc-x8o8m2Xr1JbhrEWykQOHVw/edit"
 
@@ -31,7 +32,7 @@ raw_data_path = list_file_paths("input/raw_data/", ".*Tool (\\d).*")
 kobo_tools_path = list_file_paths("input/tools/", ".*Tool (\\d).*")
 relevancy_files_path = list_file_paths("input/relevancy_files/", ".*tool(\\d).*")
 
-meta_cols <- c("Site_Visit_ID", "starttime", "Region", "Province", "District", "Area_Type", "Type_Of_School_CBE_Based_On_The_Sample", "School_CBE_Gender_Based_On_The_Sample", "School_Type_SV", "School_Gender_SV")
+meta_cols <- c("Site_Visit_ID", "EMIS_School_ID_CBE_KEY", "School_CBE_Name", "IP_Name", "Region", "Province", "District", "Area_Type", "Type_Of_School_CBE_Based_On_The_Sample", "School_CBE_Gender_Based_On_The_Sample", "School_Type_SV", "School_Gender_SV")
 meta_cols.qa_sheet <- c(Visit_ID = "Site_Visit_ID", "School Code", "Sample_Type", Survey_Date = "SubmissionDate", Region = "Region", "KEY")
 
 # Read inputs --------------------------------------------------------------
@@ -140,6 +141,9 @@ length(approved_keys_ps) == length(which(qa_sheet_ps$qa_status %in% c("APPROVED"
 # Extract deleted KEYs to be removed from data sets
 deleted_keys_ps = deletion_log |> filter(Sample_Type == "Public School") |> pull(KEY_Unique)
 
+# To be added to the data sets -------------------------------------------- DONE
+source("R/tobe_added_to_datasets.R")
+
 # convert numeric dates to date and time formats -------------------------------
 source("R/convert_numbers_to_date_time.R")
  
@@ -191,10 +195,6 @@ source("R/attach_labels.R")
 source("R/logical_checks.R")
 
 
-# change 7777, 8888, 9999 to Labels  -------------------------------------- 
-# source("R/recode_to_na.R")
-
-
 # prepare data sets to export  -------------------------------------------- 
 ## remove extra columns
 source("R/remove_extra_columns.R")
@@ -203,9 +203,33 @@ source("R/remove_extra_columns.R")
 # attach labels to calculates cols ---------------------------------------- 
 source("R/attach_calculate_label.R")
 
+# t1_sample <- read_xlsx_sheets("./output/cleaned_dfs/sterilized/labeled/Sample/QA/EERA_R3_KDR_Tool1_Public_School_Headmaster_Sample.xlsx")
+# t2_sample <- read_xlsx_sheets("./output/cleaned_dfs/sterilized/labeled/Sample/QA/EERA_R3_KDR_Tool2_Public_School_Light_Sample.xlsx")
+# t3_sample <- read_xlsx_sheets("./output/cleaned_dfs/sterilized/labeled/Sample/QA/EERA_R3_KDR_Tool3_Public_School_Headcount_Sample.xlsx")
+# t4_sample <- read_xlsx_sheets("./output/cleaned_dfs/sterilized/labeled/Sample/QA/EERA_R3_KDR_Tool4_Public_School_Teacher_Sample.xlsx")
+# t5_sample <- read_xlsx_sheets("./output/cleaned_dfs/sterilized/labeled/Sample/QA/EERA_R3_KDR_Tool5_Public_School_WASH_Sample.xlsx")
+# t6_sample <- read_xlsx_sheets("./output/cleaned_dfs/sterilized/labeled/Sample/QA/EERA_R3_KDR_Tool6_Public_School_&_CBE_Parent_Sample.xlsx")
+# t7_sample <- read_xlsx_sheets("./output/cleaned_dfs/sterilized/labeled/Sample/QA/EERA_R3_KDR_Tool7_Public_School_&_CBE_Shura_Sample.xlsx")
+# 
+# df1 <- clean_data.tool7_for_client
+# df2 <- t7_sample
+# 
+# length(df1) == length(df2)
+# # names(df1)
+# # sheet = "Support_Respondents"
+# for(sheet in names(df1)){
+#   # print(names(df1[[sheet]][!names(df1[[sheet]]) %in% names(df2[[sheet]])]))
+#   print(names(df2[[sheet]][!names(df2[[sheet]]) %in% names(df1[[sheet]])]))
+# }
+
+
 
 # export sample dfs -------------------------------------------------------
 # source("R/adhoc_scripts/sample_dfs.R")
+
+
+# change 7777, 8888, 9999 to Labels  -------------------------------------- DONE
+source("R/recode_to_na.R")
 
 
 # export data sets and issues ---------------------------------------------
